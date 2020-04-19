@@ -1,8 +1,15 @@
+import AbstractComponent from "./abstract-component.js";
 import {MONTH_NAMES} from "../const.js";
-import {formatTime} from "../utils.js";
+import {formatTime} from "../utils/common.js";
 
 
-export const createTaskTemplate = (task) => {
+// Функцию для генерации HTML-разметки можно превратить в метод класса,
+// однако делать мы этого не будем, потому что это не критично,
+// а функция у нас уже была описана
+const createTaskTemplate = (task) => {
+  // Обратите внимание, что всю работу мы производим заранее.
+  // Внутри шаблонной строки мы не производим никаких вычислений,
+  // потому что внутри большой разметки сложно искать какой-либо код
   const {description, dueDate, color, repeatingDays, isArchive, isFavorite} = task;
 
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
@@ -60,3 +67,20 @@ export const createTaskTemplate = (task) => {
     </div>
   </article>`;
 };
+
+export default class Task extends AbstractComponent {
+  constructor(task) {
+    super();
+
+    this._task = task;
+  }
+
+  getTemplate() {
+    return createTaskTemplate(this._task);
+  }
+
+  setEditButtonClickHandler(handler) {
+    this.getElement().querySelector(`.card__btn--edit`)
+      .addEventListener(`click`, handler);
+  }
+}
