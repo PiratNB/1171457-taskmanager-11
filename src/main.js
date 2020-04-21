@@ -6,7 +6,7 @@ import {generateTasks} from "./mock/task.js";
 import {generateFilters} from "./mock/filter.js";
 import {render, RenderPosition} from "./utils/render.js";
 
-
+// задание готово
 const TASK_COUNT = 22;
 
 const siteMainElement = document.querySelector(`.main`);
